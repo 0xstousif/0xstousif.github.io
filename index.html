@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A public learning journal for sharing notes, experiments, and projects."
+    />
+    <title>My Learning Journal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header class="site-header">
+      <nav class="nav container" aria-label="Main navigation">
+        <a class="brand" href="#top" aria-label="Home">learning<span>.</span>log</a>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#roadmap">Roadmap</a>
+          <a href="#projects">Projects</a>
+          <a class="nav-button" href="https://github.com/" target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero container">
+        <div class="hero-copy">
+          <p class="eyebrow">PUBLIC LEARNING JOURNAL <span>•</span> 2026</p>
+          <h1>Learning in public,<br /><em>one idea at a time.</em></h1>
+          <p class="hero-text">
+            I’m building, breaking, and documenting my way through technology.
+            This is where I share the lessons, projects, and useful mistakes
+            I collect along the way.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#projects">Explore my work <span>↓</span></a>
+            <a class="text-link" href="mailto:shaiktouseef0001@gmail.com">Say hello <span>↗</span></a>
+          </div>
+        </div>
+        <div class="hero-card" aria-label="Current learning status">
+          <div class="window-bar"><i></i><i></i><i></i><span>now-learning.md</span></div>
+          <div class="code-content">
+            <p><span class="code-muted">01</span> <span class="code-key">const</span> focus = {</p>
+            <p class="indent"><span class="code-name">topic:</span> <span class="code-string">"building for the web"</span>,</p>
+            <p class="indent"><span class="code-name">status:</span> <span class="code-string">"curious & consistent"</span>,</p>
+            <p class="indent"><span class="code-name">streak:</span> <span class="code-number">37</span>,</p>
+            <p class="indent"><span class="code-name">motto:</span> <span class="code-string">"keep going →"</span></p>
+            <p>};<span class="cursor"></span></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="intro container" id="about">
+        <div class="section-label">01 <span>ABOUT THIS SPACE</span></div>
+        <div class="intro-content">
+          <h2>A workbench for<br /><span>curiosity.</span></h2>
+          <div>
+            <p>
+              I believe the best way to learn is to make things and explain what
+              I discover. This site is a living archive of my progress—short notes,
+              hands-on experiments, and projects that started as questions.
+            </p>
+            <p class="small-note">No perfect tutorials. Just honest progress.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="roadmap section-band" id="roadmap">
+        <div class="container">
+          <div class="section-label light">02 <span>THE ROADMAP</span></div>
+          <div class="section-heading">
+            <h2>What I’m exploring</h2>
+            <p>Current chapters in my learning journey.</p>
+          </div>
+          <div class="roadmap-grid">
+            <article class="roadmap-item active">
+              <span class="item-number">01</span>
+              <div><h3>Web foundations</h3><p>HTML, CSS, accessibility, and the details that make a site feel good.</p></div>
+              <span class="item-status">IN PROGRESS</span>
+            </article>
+            <article class="roadmap-item">
+              <span class="item-number">02</span>
+              <div><h3>JavaScript & APIs</h3><p>Making interfaces useful, interactive, and connected to the world.</p></div>
+              <span class="item-status">UP NEXT</span>
+            </article>
+            <article class="roadmap-item">
+              <span class="item-number">03</span>
+              <div><h3>Tools & systems</h3><p>Git, deployment, developer workflows, and building better habits.</p></div>
+              <span class="item-status">ON THE LIST</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="projects container" id="projects">
+        <div class="section-label">03 <span>SELECTED NOTES & PROJECTS</span></div>
+        <div class="section-heading">
+          <h2>Things I’ve made</h2>
+          <a class="text-link" href="https://github.com/" target="_blank" rel="noreferrer">View all on GitHub <span>↗</span></a>
+        </div>
+        <div class="project-grid">
+          <a class="project-card featured" href="#">
+            <div class="project-top"><span class="project-type">PROJECT / 001</span><span class="arrow">↗</span></div>
+            <h3>My first portfolio</h3>
+            <p>A responsive personal site built from scratch to practice layout, type, and visual storytelling.</p>
+            <div class="tags"><span>HTML</span><span>CSS</span><span>RESPONSIVE</span></div>
+          </a>
+          <a class="project-card" href="#">
+            <div class="project-top"><span class="project-type">NOTE / 004</span><span class="arrow">↗</span></div>
+            <h3>What I learned about Git</h3>
+            <p>A plain-English guide to the commands that finally made version control click.</p>
+            <div class="tags"><span>GIT</span><span>NOTES</span></div>
+          </a>
+          <a class="project-card" href="#">
+            <div class="project-top"><span class="project-type">EXPERIMENT / 002</span><span class="arrow">↗</span></div>
+            <h3>Small things, daily</h3>
+            <p>A collection of tiny challenges for practicing one focused idea at a time.</p>
+            <div class="tags"><span>JAVASCRIPT</span><span>PLAYGROUND</span></div>
+          </a>
+        </div>
+      </section>
+
+      <section class="closing container">
+        <p class="eyebrow">KEEP IN TOUCH</p>
+        <h2>Still learning.<br /><em>Always sharing.</em></h2>
+        <p>Follow along, send a question, or share something you’re learning too.</p>
+        <a class="button button-primary" href="mailto:shaiktouseef0001@gmail.com">Get in touch ↗</a>
+      </section>
+    </main>
+
+    <footer class="footer container">
+      <p>© 2026 Your Name. Built while learning.</p>
+      <div><a href="https://github.com/" target="_blank" rel="noreferrer">GitHub ↗</a><a href="mailto:hello@example.com">Email ↗</a></div>
+    </footer>
+  </body>
+</html>
