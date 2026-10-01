@@ -1,68 +1,204 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="0xstousif — security engineer, learner, and builder." />
-    <title>0xstousif :: security engineer</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="scanlines" aria-hidden="true"></div>
-    <header class="topbar">
-      <a class="logo" href="#home">0xstousif<span>_</span></a>
-      <nav aria-label="Main navigation">
-        <a href="#about">whoami</a><a href="#experience">xp</a><a href="#writeups">writeups</a><a href="#contact">contact</a>
-      </nav>
-    </header>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#151515">
+<meta name="description" content="0xstousif - security engineer, learner, and builder.">
+<title>0xstousif | Security Engineer</title>
+<style>
+:root{--bg:#151515;--ink:#e6e2d3;--soft:#8f8b7d;--line:#3a3935;--acc:#d8d3bd}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.75 "IBM Plex Mono","Courier New",monospace;overflow-x:hidden}
+a{color:inherit}
+::selection{background:var(--ink);color:var(--bg)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px)}
 
-    <main id="home">
-      <section class="landing shell">
-        <p class="terminal-line"><span class="prompt">guest@0xstousif:~$</span> ./enter_void.sh</p>
-        <h1>Welcome to<br /><span>the void.</span></h1>
-        <p class="landing-copy">Security engineer. Curious mind.<br />Breaking things to understand how they work.</p>
-        <a class="enter" href="#about">[ enter ]</a>
-        <p class="hint">scroll to explore <span>↓</span></p>
-      </section>
+/* intro */
+#intro{position:fixed;inset:0;z-index:20;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;transition:opacity .9s}
+#intro.gone{opacity:0;pointer-events:none}
+#intro iframe{position:absolute;top:50%;left:50%;width:max(100vw,177.78vh);height:max(56.25vw,100vh);transform:translate(-50%,-50%);border:0;pointer-events:none;opacity:.55}
+#snd{background:none;border:1px solid var(--line);color:var(--soft);font:inherit;padding:0 8px;cursor:pointer}
+#snd:hover{color:var(--ink);border-color:var(--ink)}
+#intro .t{position:relative;text-align:center;padding:0 6vw}
+#intro h1{font-weight:400;font-size:clamp(20px,4.5vw,38px);letter-spacing:.35em;margin-bottom:14px}
+#intro p{color:var(--soft);font-size:13px;animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
 
-      <section class="section shell" id="about">
-        <p class="terminal-line"><span class="prompt">guest@0xstousif:~$</span> whoami</p>
-        <div class="command-output"><h2>about_me<span class="cursor">█</span></h2>
-          <div class="about-grid"><div>
-            <p class="lead">Hi, I’m <strong>Shaik Tousif</strong> — a security engineer interested in understanding systems from the inside out.</p>
-            <p>I’m documenting what I learn across application security, offensive security, cloud, and the tools that make security work repeatable.</p>
-            <p class="muted">This is a work in progress. The best notes usually are.</p>
-          </div><div class="terminal-box">
-            <p><span class="key">user</span> :: 0xstousif</p><p><span class="key">role</span> :: security engineer</p><p><span class="key">status</span> :: learning in public</p><p><span class="key">location</span> :: earth.local</p><p><span class="key">mission</span> :: build. break. learn.</p>
-          </div></div>
-        </div>
-      </section>
+/* header */
+header{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:baseline;padding:20px 5vw;background:linear-gradient(var(--bg),transparent)}
+.logo{text-decoration:none;font-size:20px;letter-spacing:.12em}
+nav{display:flex;gap:26px}
+nav a{text-decoration:none;color:var(--soft);padding:2px 0;border-bottom:1px solid transparent}
+nav a:hover,nav a.on{color:var(--ink);border-color:var(--ink)}
 
-      <section class="section shell" id="experience">
-        <p class="terminal-line"><span class="prompt">guest@0xstousif:~$</span> cat experience.log</p>
-        <div class="command-output"><h2>experience.log</h2><div class="timeline">
-          <article class="timeline-item"><span class="date">NOW</span><div><h3>Security Engineer <small>// present</small></h3><p>Working on secure systems, practical assessments, and improving the way security problems are found and fixed.</p></div></article>
-          <article class="timeline-item"><span class="date">2025</span><div><h3>Security learning lab <small>// independent</small></h3><p>Building labs, solving challenges, reading research, and turning experiments into notes that others can use.</p></div></article>
-          <article class="timeline-item"><span class="date">2024</span><div><h3>Started sharing in public <small>// first commit</small></h3><p>Created this space to track the journey and make every lesson easier to revisit.</p></div></article>
-        </div></div>
-      </section>
+/* views */
+main{min-height:100%;padding:130px 5vw 90px;max-width:860px;margin:0 auto}
+.view{display:none}
+.view.on{display:block;animation:in .5s ease}
+@keyframes in{from{opacity:0}to{opacity:1}}
+.p{color:var(--soft);font-size:13px;margin-bottom:16px}
+h2{font-weight:400;font-size:clamp(26px,5vw,40px);letter-spacing:.06em;margin-bottom:26px;border-bottom:1px solid var(--line);padding-bottom:12px}
+h2 i{font-style:normal;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+h3{font-weight:400;font-size:17px;letter-spacing:.04em}
+p+p{margin-top:14px}
+.hero{min-height:60vh;display:flex;flex-direction:column;justify-content:center}
+.hero h1{font-weight:400;font-size:clamp(34px,9vw,84px);line-height:1.05;letter-spacing:.04em;margin-bottom:22px}
+.go{display:inline-block;margin-top:30px;padding:8px 20px;border:1px solid var(--ink);text-decoration:none}
+.go:hover{background:var(--ink);color:var(--bg)}
+dl{margin-top:28px;border:1px solid var(--line);padding:18px 22px;display:grid;grid-template-columns:max-content 1fr;gap:4px 24px}
+dt{color:var(--soft)}dd{margin:0}
+.tl{border-left:1px solid var(--ink);margin-left:6px;padding-left:26px}
+.tl article{position:relative;padding-bottom:34px}
+.tl article::before{content:"";position:absolute;left:-31px;top:9px;width:9px;height:9px;background:var(--bg);border:1px solid var(--ink);transform:rotate(45deg)}
+.tl time{font-size:12px;color:var(--soft)}
+.posts{display:grid;gap:12px;margin-top:22px}
+.post{display:block;text-decoration:none;border:1px solid var(--line);padding:16px 20px}
+.post:hover{border-color:var(--ink);background:#1d1d1b}
+.post em{font-style:normal;font-size:12px;color:var(--soft)}
+.post p{color:var(--soft);font-size:13px}
+.links{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.links a{padding:6px 16px;border:1px solid var(--ink);text-decoration:none}
+.links a:hover{background:var(--ink);color:var(--bg)}
+/* game */
+#log{border:1px solid var(--line);padding:16px 20px;min-height:150px;max-height:300px;overflow:auto;margin:20px 0 14px;font-size:14px}
+#gf{display:flex;gap:10px}
+#gi{flex:1;background:none;border:1px solid var(--line);color:var(--ink);font:inherit;padding:6px 12px}
+#gf button{background:none;border:1px solid var(--ink);color:var(--ink);font:inherit;padding:6px 16px;cursor:pointer}
+#gf button:hover{background:var(--ink);color:var(--bg)}
+footer{text-align:center;padding:26px;color:var(--soft);font-size:12px}
+@media(max-width:560px){nav{gap:14px;font-size:13px}.logo{font-size:16px}dl{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
 
-      <section class="section shell" id="writeups">
-        <p class="terminal-line"><span class="prompt">guest@0xstousif:~$</span> ls -la writeups/</p>
-        <div class="command-output"><h2>writeups/</h2><p class="muted intro">Notes from labs, challenges, and things that made me stop and think.</p>
-          <div class="writeup-grid">
-            <a class="writeup" href="#"><span class="tag">WEB</span><h3>Reading an HTTP request</h3><p>Small observations that make web security fundamentals easier to see.</p><span class="read">read more →</span></a>
-            <a class="writeup" href="#"><span class="tag">LINUX</span><h3>My command-line field notes</h3><p>The commands and habits I keep reaching for while investigating a system.</p><span class="read">read more →</span></a>
-            <a class="writeup" href="#"><span class="tag">LAB</span><h3>Building a safe practice lab</h3><p>A personal environment for learning without putting real systems at risk.</p><span class="read">read more →</span></a>
-          </div>
-        </div>
-      </section>
+<div id="intro" role="button" tabindex="0" aria-label="Enter site">
+  <iframe id="yt" title="Intro video" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/iT_IiHsZtWg?autoplay=1&mute=1&loop=1&playlist=iT_IiHsZtWg&controls=0&modestbranding=1&playsinline=1&rel=0&disablekb=1&enablejsapi=1"></iframe>
+  <div class="t">
+    <h1>0xSTOUSIF</h1>
+    <p>click anywhere to enter the void</p>
+    <p style="animation:none;margin-top:8px;font-size:12px">audio starts after your click</p>
+  </div>
+</div>
 
-      <section class="section shell" id="contact">
-        <p class="terminal-line"><span class="prompt">guest@0xstousif:~$</span> ./connect.sh</p>
-        <div class="connect command-output"><h2>let’s connect<span class="cursor">█</span></h2><p>Have a question, a useful resource, or something interesting to build?</p><div class="links"><a href="https://github.com/0xstousif" target="_blank" rel="noreferrer">[ github ]</a><a href="mailto:stousiif@gmail.com">[ email ]</a><a href="https://www.linkedin.com/in/stousiif" target="_blank" rel="noreferrer">[ linkedin ]</a></div></div>
-      </section>
-    </main>
-    <footer class="shell footer"><span>0xstousif :: 2026</span><span>built with curiosity <b>♡</b></span></footer>
-  </body>
+<header>
+  <a class="logo" href="#home">0xstousif</a>
+  <nav>
+    <a href="#about">whoami/</a>
+    <a href="#experience">xp/</a>
+    <a href="#writeups">writeups/</a>
+    <a href="#game">???</a>
+    <button id="snd" aria-label="Toggle sound" hidden>&#9835;</button>
+  </nav>
+</header>
+
+<main>
+  <section class="view" id="home">
+    <div class="hero">
+      <div class="p">guest@0xstousif:~$ ./enter_void.sh</div>
+      <h1>Welcome to<br>the void.</h1>
+      <p>Security engineer. Curious mind.<br>Breaking things to understand how they work.</p>
+      <div><a class="go" href="#about">[ enter ]</a></div>
+    </div>
+  </section>
+
+  <section class="view" id="about">
+    <div class="p">guest@0xstousif:~$ whoami</div>
+    <h2>about_me<i>_</i></h2>
+    <p>Hi, I'm <strong>Shaik Tousif</strong>, a security engineer interested in understanding systems from the inside out.</p>
+    <p>I document what I learn across application security, offensive security, cloud, and the tools that make security work repeatable.</p>
+    <dl>
+      <dt>user</dt><dd>0xstousif</dd>
+      <dt>role</dt><dd>security engineer</dd>
+      <dt>status</dt><dd>learning in public</dd>
+      <dt>location</dt><dd>earth.local</dd>
+      <dt>mission</dt><dd>build. break. learn.</dd>
+    </dl>
+  </section>
+
+  <section class="view" id="experience">
+    <div class="p">guest@0xstousif:~$ cat experience.log</div>
+    <h2>experience.log<i>_</i></h2>
+    <div class="tl">
+      <article><time>NOW</time><h3>Security Engineer // present</h3><p>Working on secure systems, practical assessments, and better ways to find and fix security problems.</p></article>
+      <article><time>2025</time><h3>Security learning lab // independent</h3><p>Building labs, solving challenges, reading research, and turning experiments into notes.</p></article>
+      <article><time>2024</time><h3>First commit // started sharing</h3><p>Created this space to track the journey and make every lesson easier to revisit.</p></article>
+    </div>
+  </section>
+
+  <section class="view" id="writeups">
+    <div class="p">guest@0xstousif:~$ ls -la writeups/</div>
+    <h2>writeups/<i>_</i></h2>
+    <p>Notes from labs, challenges, and things that made me stop and think.</p>
+    <div class="posts">
+      <a class="post" href="#"><em>WEB</em><h3>Reading an HTTP request</h3><p>Small observations that make web security fundamentals easier to see.</p></a>
+      <a class="post" href="#"><em>LINUX</em><h3>My command-line field notes</h3><p>The commands and habits I keep reaching for while investigating a system.</p></a>
+      <a class="post" href="#"><em>LAB</em><h3>Building a safe practice lab</h3><p>A personal environment for learning without putting real systems at risk.</p></a>
+    </div>
+    <div class="p" style="margin-top:50px">guest@0xstousif:~$ ./connect.sh</div>
+    <div class="links">
+      <a href="https://github.com/0xstousif">[ github ]</a>
+      <a href="mailto:stousiif@gmail.com">[ email ]</a>
+      <a href="https://www.linkedin.com/in/stousiif">[ linkedin ]</a>
+    </div>
+  </section>
+
+  <section class="view" id="game">
+    <div class="p">guest@0xstousif:~$ ./decrypt.sh</div>
+    <h2>???<i>_</i></h2>
+    <p>A 4-digit access code is locked inside the void. Each guess returns how many digits are correct and how many are in the right place.</p>
+    <div id="log" aria-live="polite"></div>
+    <form id="gf" autocomplete="off">
+      <input id="gi" inputmode="numeric" maxlength="4" pattern="\d{4}" placeholder="0000" aria-label="Guess">
+      <button>[ try ]</button>
+    </form>
+  </section>
+</main>
+<footer>0xstousif :: 2026 &middot; built with curiosity</footer>
+
+<script>
+(function(){
+  var views=[].slice.call(document.querySelectorAll(".view")),links=[].slice.call(document.querySelectorAll("nav a"));
+  function route(){
+    var id=(location.hash||"#home").slice(1);
+    if(!document.getElementById(id))id="home";
+    views.forEach(function(v){v.classList.toggle("on",v.id===id)});
+    links.forEach(function(a){a.classList.toggle("on",a.getAttribute("href")==="#"+id)});
+    scrollTo(0,0);
+  }
+  addEventListener("hashchange",route);route();
+
+  var intro=document.getElementById("intro"),yt=document.getElementById("yt"),snd=document.getElementById("snd"),on=false;
+  function cmd(f,a){try{yt.contentWindow.postMessage(JSON.stringify({event:"command",func:f,args:a||[]}),"*")}catch(e){}}
+  function sound(v){on=v;cmd(v?"unMute":"mute");if(v)cmd("setVolume",[50]);cmd("playVideo");snd.style.opacity=v?1:.5}
+  function enter(){
+    sound(true);snd.hidden=false;
+    intro.classList.add("gone");
+  }
+  snd.addEventListener("click",function(){sound(!on)});
+  intro.addEventListener("click",enter);
+  intro.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" ")enter()});
+
+  var code="",log=document.getElementById("log");
+  function reset(){code="";for(var i=0;i<4;i++)code+=Math.floor(Math.random()*10);log.innerHTML="";say("system ready. 4 digits. go.")}
+  function say(t){var d=document.createElement("div");d.textContent="> "+t;log.appendChild(d);log.scrollTop=log.scrollHeight}
+  document.getElementById("gf").addEventListener("submit",function(e){
+    e.preventDefault();
+    var i=document.getElementById("gi"),g=i.value;i.value="";
+    if(!/^\d{4}$/.test(g)){say("enter exactly 4 digits.");return}
+    var pos=0,c=code.split(""),h=g.split(""),rest={};
+    for(var k=0;k<4;k++){if(h[k]===c[k])pos++;else rest[c[k]]=(rest[c[k]]||0)+1}
+    var hit=pos;
+    for(k=0;k<4;k++){if(h[k]!==c[k]&&rest[h[k]]>0){hit++;rest[h[k]]--}}
+    if(pos===4){say(g+" :: access granted. the void remembers you.");say("new code generated.");setTimeout(reset,1500)}
+    else say(g+" :: "+hit+" correct, "+pos+" in place");
+  });
+  reset();
+})();
+</script>
+</body>
 </html>
