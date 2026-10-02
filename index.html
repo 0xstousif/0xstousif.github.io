@@ -7,56 +7,44 @@
 <meta name="description" content="0xstousif - security engineer. Interactive terminal portfolio.">
 <title>0xstousif | terminal</title>
 <style>
-:root{--bg:#151515;--ink:#e6e2d3;--soft:#8f8b7d;--line:#3a3935;--acc:#b9d6a3;--warn:#e0a96d}
+:root{--bg:#050805;--ink:#d7e6d2;--soft:#7f967a;--line:#24402a;--acc:#3dff7a;--warn:#e0a96d}
 *{box-sizing:border-box;margin:0}
 html,body{height:100%}
 body{background:var(--bg);color:var(--ink);font:15px/1.65 "IBM Plex Mono","Courier New",monospace}
 ::selection{background:var(--ink);color:var(--bg)}
 a{color:var(--acc)}
 body::after{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px)}
-#gate{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:0 6vw;text-align:center;z-index:5;background:var(--bg)}
-#gate h1{font-weight:400;font-size:clamp(22px,5vw,40px);letter-spacing:.3em}
-#gate p{color:var(--soft)}
-#gate form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 input{background:none;border:0;border-bottom:1px solid var(--ink);color:var(--ink);font:inherit;padding:6px 4px;outline:none}
-#nm{width:min(260px,70vw);text-align:center}
 button{background:none;border:1px solid var(--ink);color:var(--ink);font:inherit;padding:6px 18px;cursor:pointer}
 button:hover,button:focus-visible{background:var(--ink);color:var(--bg);outline:none}
-#term{display:none;height:100%;flex-direction:column;max-width:900px;margin:0 auto;padding:0 5vw}
+#mx{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+#term{position:relative;z-index:1;display:flex;height:100%;flex-direction:column;max-width:900px;margin:0 auto;padding:0 5vw;background:rgba(5,8,5,.8);border-left:1px solid var(--line);border-right:1px solid var(--line)}
 #bar{padding:14px 0;border-bottom:1px solid var(--line);color:var(--soft);font-size:13px;display:flex;justify-content:space-between}
 #out{flex:1;overflow-y:auto;padding:18px 0;word-wrap:break-word}
 #out>div{white-space:pre-wrap;margin-bottom:2px}
 .m{color:var(--soft)}.k{color:var(--acc)}.w{color:var(--warn)}.h{font-size:1.15em;letter-spacing:.05em}
-.row{display:flex;gap:10px;padding:10px 0}
+.row{position:relative;display:flex;align-items:baseline;gap:8px;padding:12px 0 20px;border-top:1px solid var(--line)}
 .pr{white-space:nowrap;color:var(--acc)}
-#in{flex:1;border:0;min-width:0}
-#chips{display:flex;gap:8px;flex-wrap:wrap;padding:6px 0 16px}
-#chips button{padding:2px 12px;font-size:13px;border-color:var(--line);color:var(--soft)}
-#chips button:hover{color:var(--bg);border-color:var(--ink)}
-.cur::after{content:"\2588";animation:b 1s steps(1) infinite}
+#in{position:absolute;inset:0;width:100%;height:100%;opacity:0;border:0;font-size:16px}
+#ln{flex:1;white-space:pre-wrap;word-break:break-all;min-height:1.65em}
+#go{position:relative;z-index:2;padding:0 12px;border-color:var(--line);color:var(--soft)}
+.cu{background:var(--acc);color:var(--bg);animation:b 1s steps(1) infinite}
 @keyframes b{50%{opacity:0}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
 <body>
 
-<div id="gate">
-  <h1>0xSTOUSIF</h1>
-  <p>identify yourself, visitor.</p>
-  <form id="gf">
-    <input id="nm" maxlength="16" placeholder="your name" autocomplete="off" aria-label="Your name" autofocus>
-    <button>[ enter ]</button>
-  </form>
-  <p style="font-size:12px">letters and numbers only. leave blank to enter as guest.</p>
-</div>
+<canvas id="mx" aria-hidden="true"></canvas>
 
 <div id="term">
-  <div id="bar"><span id="title"></span><span>type <b>help</b></span></div>
+  <div id="bar"><span id="title"></span><span></span></div>
   <div id="out" aria-live="polite"></div>
-  <div id="chips"></div>
   <form class="row" id="cf">
     <span class="pr" id="pr"></span>
-    <input id="in" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Command">
+    <span id="ln"></span>
+    <button type="submit" id="go" aria-label="Run command">&#8629;</button>
+    <input id="in" enterkeyhint="send" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Command">
   </form>
 </div>
 
@@ -93,11 +81,13 @@ function bottom(){out.scrollTop=out.scrollHeight}
 var C={
  help:function(){
   line("available commands","h");gap();
-  [["whoami","who am i"],["xp","experience log"],["blogs","list writeups (blogs 1 to read one)"],["skills","what I work with"],["contact","ways to reach me"],["ls","list files"],["cat <file>","read a file"],["clear","clear the screen"],["exit","change your name"]].forEach(function(r){line("  "+r[0].padEnd(12)+r[1])});
+  [["whoami","who am i, plus my skills"],["xp","experience log"],["blogs","list writeups (blogs 1 to read one)"],["links","where to find me"],["ls","list files"],["cat <file>","read a file"],["clear","clear the screen"]].forEach(function(r){line("  "+r[0].padEnd(12)+r[1])});
   gap();line("tip: Tab autocompletes, arrow keys browse history. try poking around.","m")},
  whoami:function(){
   line("about_me","h");gap();ME.about.forEach(function(t){line(t);gap()});
   ME.info.forEach(function(r){line(r[0].padEnd(10)+":: "+r[1])});
+  gap();line("skills","k");gap();
+  [["appsec","web, APIs, auth flows"],["offensive","labs, CTFs, assessments"],["cloud","configs, identity, exposure"],["tooling","scripts that make checks repeatable"]].forEach(function(r){line("  "+r[0].padEnd(11)+"- "+r[1])});
   gap();line("next: type xp or blogs","m")},
  xp:function(){
   line("experience.log","h");gap();
@@ -108,29 +98,24 @@ var C={
   line("writeups/","h");gap();
   POSTS.forEach(function(p,i){line((i+1)+". ["+p[0]+"] "+p[1],"k");line("   "+p[2],"m")});
   gap();line("read one with: blogs 1","m")},
- skills:function(){
-  line("skills.txt","h");gap();
-  [["appsec","web, APIs, auth flows"],["offensive","labs, CTFs, assessments"],["cloud","configs, identity, exposure"],["tooling","scripts that make checks repeatable"]].forEach(function(r){line(r[0].padEnd(11)+"- "+r[1])});
-  gap();line("(edit these in the file to match your real stack)","m")},
- contact:function(){
-  line("connect.sh","h");gap();for(var k in LINKS)link("[ "+k+" ]  "+LINKS[k].replace("mailto:",""),LINKS[k])},
- ls:function(){line("about.txt   experience.log   writeups/   skills.txt   connect.sh","k")},
+ links:function(){
+  line("links.txt","h");gap();for(var k in LINKS)link("[ "+k+" ]  "+LINKS[k].replace("mailto:",""),LINKS[k])},
+ ls:function(){line("about.txt   experience.log   writeups/   links.txt","k")},
  cat:function(a){
-  var m={"about.txt":"whoami","experience.log":"xp","skills.txt":"skills","connect.sh":"contact"};
+  var m={"about.txt":"whoami","experience.log":"xp","links.txt":"links"};
   if(!a[0])return line("usage: cat <file>","w");
   var f=a[0].replace(/\/$/,"");
   if(m[f])return C[m[f]]([]);
   if(f==="writeups")return line("cat: writeups: Is a directory. try: blogs","w");
   line("cat: "+f.slice(0,40)+": No such file","w")},
  clear:function(){out.innerHTML=""},
- exit:function(){$("term").style.display="none";$("gate").style.display="flex";$("nm").value="";$("nm").focus()},
  sudo:function(){line(user+" is not in the sudoers file. This incident will be reported.","w")},
  date:function(){line(new Date().toString())},
  echo:function(a){line(a.join(" ").slice(0,200))},
  rm:function(){line("nice try, "+user+". the void is read-only.","w")},
  pwd:function(){line("/home/"+user)}
 };
-C.writeups=C.blogs;C.about=C.whoami;C.exp=C.xp;C.links=C.contact;C.help["?"]=1;
+C.writeups=C.blogs;C.about=C.whoami;C.exp=C.xp;C.contact=C.links;C.socials=C.links;C.skills=C.whoami;C.help["?"]=1;
 
 function run(raw){
   var cmd=raw.trim();
@@ -144,36 +129,63 @@ function run(raw){
 }
 
 /* ---------- boot ---------- */
-function start(n){
-  user=n||"guest";
-  $("gate").style.display="none";$("term").style.display="flex";
+function start(){
+  user="guest";
   $("pr").textContent=user+"@"+HOST+":~$";
   $("title").textContent=user+"@"+HOST;
   document.title=user+"@"+HOST+" | terminal";
   out.innerHTML="";
-  line("Welcome to the void, "+user+".","h");
+  line("Welcome to the void.","h");
   line("Security engineer. Curious mind. Breaking things to understand how they work.","m");
-  gap();line("type help to see what you can do, or tap a shortcut below.");gap();
-  var ch=$("chips");ch.innerHTML="";
-  ["help","whoami","xp","blogs","skills","contact"].forEach(function(c){
-    var b=document.createElement("button");b.type="button";b.textContent=c;
-    b.onclick=function(){run(c);inp.focus()};ch.appendChild(b)});
-  inp.focus();
+  gap();line("Every command opens a door. Start with: whoami");gap();
+  render();inp.focus();
 }
-$("gf").addEventListener("submit",function(e){
-  e.preventDefault();
-  var n=$("nm").value.toLowerCase().replace(/[^a-z0-9_-]/g,"").slice(0,16);
-  start(n);
-});
-$("cf").addEventListener("submit",function(e){e.preventDefault();var v=inp.value;inp.value="";run(v)});
+var ln=$("ln");
+function render(){
+  var v=inp.value,p=inp.selectionStart==null?v.length:inp.selectionStart,c=document.createElement("span");
+  c.className="cu";c.textContent=v.charAt(p)||" ";
+  ln.textContent="";ln.appendChild(document.createTextNode(v.slice(0,p)));ln.appendChild(c);ln.appendChild(document.createTextNode(v.slice(p+1)));
+}
+function setv(v){inp.value=v;inp.setSelectionRange(v.length,v.length);render()}
+["input","keyup","click","focus"].forEach(function(ev){inp.addEventListener(ev,render)});
+document.addEventListener("selectionchange",function(){if(document.activeElement===inp)render()});
+inp.addEventListener("keydown",function(){setTimeout(render,0)});
+document.addEventListener("keydown",function(e){if(document.activeElement!==inp&&!e.ctrlKey&&!e.metaKey&&!e.altKey)inp.focus()});
+$("cf").addEventListener("submit",function(e){e.preventDefault();var v=inp.value;setv("");run(v)});
 inp.addEventListener("keydown",function(e){
-  if(e.key==="ArrowUp"){e.preventDefault();if(hi>0)inp.value=hist[--hi]}
-  else if(e.key==="ArrowDown"){e.preventDefault();inp.value=hi<hist.length-1?hist[++hi]:(hi=hist.length,"")}
+  if(e.key==="Enter"||e.keyCode===13){e.preventDefault();var v=inp.value;setv("");run(v);return}
+  if(e.key==="ArrowUp"){e.preventDefault();if(hi>0)setv(hist[--hi])}
+  else if(e.key==="ArrowDown"){e.preventDefault();setv(hi<hist.length-1?hist[++hi]:(hi=hist.length,""))}
   else if(e.key==="Tab"){e.preventDefault();var v=inp.value.toLowerCase();if(!v)return;
-    var m=Object.keys(C).filter(function(k){return k.indexOf(v)===0});if(m.length===1)inp.value=m[0]+" "}
+    var m=Object.keys(C).filter(function(k){return k.indexOf(v)===0});if(m.length===1)setv(m[0]+" ")}
   else if(e.ctrlKey&&e.key==="l"){e.preventDefault();C.clear()}
 });
 $("term").addEventListener("click",function(e){if(!window.getSelection().toString()&&e.target.tagName!=="A"&&e.target.tagName!=="BUTTON")inp.focus()});
+/* ---------- matrix rain ---------- */
+(function(){
+  var cv=$("mx"),x=cv.getContext("2d"),cols,drops,fs=16,
+      ch="01ABCDEF0123456789<>/\\{}[]#$%&*+=ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉ".split(""),last=0,
+      still=matchMedia("(prefers-reduced-motion:reduce)").matches;
+  function size(){cv.width=innerWidth;cv.height=innerHeight;cols=Math.ceil(cv.width/fs);drops=[];for(var i=0;i<cols;i++)drops[i]=Math.random()*-50;x.fillStyle="#050805";x.fillRect(0,0,cv.width,cv.height)}
+  function draw(t){
+    if(t-last>55){
+      last=t;
+      x.fillStyle="rgba(5,8,5,.08)";x.fillRect(0,0,cv.width,cv.height);
+      x.font=fs+"px monospace";
+      for(var i=0;i<cols;i++){
+        var c=ch[Math.floor(Math.random()*ch.length)];
+        x.fillStyle=Math.random()>.97?"#d8ffe4":"#1fa84a";
+        x.fillText(c,i*fs,drops[i]*fs);
+        if(drops[i]*fs>cv.height&&Math.random()>.975)drops[i]=0;
+        drops[i]++;
+      }
+    }
+    if(!still)requestAnimationFrame(draw);
+  }
+  addEventListener("resize",size);size();
+  if(still){for(var k=0;k<60;k++)draw(k*100)}else requestAnimationFrame(draw);
+})();
+start();
 })();
 </script>
 </body>
